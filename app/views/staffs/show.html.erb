@@ -1,19 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="staff_center show_place">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @staff.name %>
-</p>
+  <div class= "show_staff">
+    <p>
+      <strong>名前</strong>
+      <br><%= @staff.name %>
+    </p>
+  </div> 
 
-<p>
-  <strong>Email:</strong>
-  <%= @staff.email %>
-</p>
+  <div class= "show_staff">
+    <p>
+      <strong>メールアドレス</strong>
+      <br><%= @staff.email %>
+    </p>
+  </div>
 
-<p>
-  <strong>Cellphone:</strong>
-  <%= @staff.cellphone %>
-</p>
+  <div class= "show_staff">
+    <p>
+      <strong>電話番号</strong>
+      <br><%= @staff.cellphone %>
+    </p>
+  </div>
 
-<%= link_to 'Edit', edit_staff_path(@staff) %> |
-<%= link_to 'Back', staffs_path %>
+  <%= link_to '編集', edit_staff_path(@staff),  class: "btn btn-success" %> |
+  <%= link_to '戻る', staffs_path ,  class: "btn btn-primary"%>
+</div>

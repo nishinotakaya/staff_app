@@ -12,21 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.label :名前 %>
+   <br><%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.label :メールアドレス %>
+    <br><%= form.text_field :email %>
   </div>
 
   <div class="field">
-    <%= form.label :cellphone %>
-    <%= form.number_field :cellphone %>
+    <%= form.label :電話番号 %>
+    <br><%= form.text_field :cellphone %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <br><%= form.submit "追加", class: "btn btn-success"  %>
   </div>
 <% end %>

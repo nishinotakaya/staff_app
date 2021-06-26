@@ -1,69 +1,77 @@
 class StaffsController < ApplicationController
-  before_action :set_staff, only: %i[ show edit update destroy ]
+  #before_actionで各メソッドを呼び出す前にメソッドを呼び出す
+ #onlyでどのメソッドで呼び出すか制限をかける
+before_action :set_staff, only: [:show, :update, :destroy, :edit]
 
-  # GET /staffs or /staffs.json
-  def index
-    @staffs = Staff.all
-  end
 
-  # GET /staffs/1 or /staffs/1.json
-  def show
-  end
+#index->データの一覧の表示
+ def index
+   #Staffのデータの全件取得
+   @staffs = Staff.all
+ end
 
-  # GET /staffs/new
-  def new
-    @staff = Staff.new
-  end
 
-  # GET /staffs/1/edit
-  def edit
-  end
+ def new
+   @staff = Staff.new
+ end
 
-  # POST /staffs or /staffs.json
-  def create
-    @staff = Staff.new(staff_params)
+ def show
+  #before_actionでデータの取得は完了している
+ end
 
-    respond_to do |format|
-      if @staff.save
-        format.html { redirect_to @staff, notice: "Staff was successfully created." }
-        format.json { render :show, status: :created, location: @staff }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+ #create->新規データの登録
+ def create
+    #formのデータを受け取る
+   @staff = Staff.new(staff_params)
+   if @staff.save
+     #saveが完了したら、一覧ページへリダイレクト
+     flash[:success] = '新規作成に成功しました。'
+     redirect_to staffs_url
+   else
+   #saveを失敗すると新規作成ページへ
+     render :new
+   end
+ end
 
-  # PATCH/PUT /staffs/1 or /staffs/1.json
-  def update
-    respond_to do |format|
-      if @staff.update(staff_params)
-        format.html { redirect_to @staff, notice: "Staff was successfully updated." }
-        format.json { render :show, status: :ok, location: @staff }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+ #edit->編集ページの表示
+ def edit
+ #before_actionでデータの取得は完了している
+ end
 
-  # DELETE /staffs/1 or /staffs/1.json
-  def destroy
-    @staff.destroy
-    respond_to do |format|
-      format.html { redirect_to staffs_url, notice: "Staff was successfully destroyed." }
-      format.json { head :no_content }
-    end
-  end
+ def update
+    #編集データの取得
+   if @staff.update!(staff_params)
+     #updateが完了したら一覧ページへリダイレクト
+     flash[:success] = "従業員情報を更新しました。"
+     redirect_to staffs_url
+   else
+     #updateを失敗すると編集ページへ
+     render :edit     
+   end
+ end
+
+ #destroy->データの削除
+ def destroy
+   #データの削除
+   @staff.destroy
+   flash[:success] = "#{@staff.name}のデータを削除しました。"
+   #一覧ページへリダイレクト
+   redirect_to staffs_url
+ end
+
+
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_staff
-      @staff = Staff.find(params[:id])
-    end
+   #strong parameters リクエストパラメターの検証（これがないとうまくいかないので注意）
 
-    # Only allow a list of trusted parameters through.
-    def staff_params
-      params.require(:staff).permit(:name, :email, :cellphone)
-    end
+   def staff_params
+     params.require(:staff).permit(:name, :email, :cellphone)
+   end
+
+   #共通処理なので、before_actionで呼び出している
+   def set_staff
+   #特定データの取得
+     @staff = Staff.find(params[:id])
+   end
+
 end
