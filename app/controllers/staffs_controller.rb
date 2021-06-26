@@ -73,5 +73,4 @@ before_action :set_staff, only: [:show, :update, :destroy, :edit]
    #特定データの取得
      @staff = Staff.find(params[:id])
    end
-
 end
